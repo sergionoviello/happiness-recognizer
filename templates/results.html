@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Happiness Recognizer</title>
+    <style>
+        body {
+            font-family: 'Tahoma';
+            font-size: 15px;
+            background: #28323E;
+            color: #737C86;
+        }
+        .container {
+          width: 50%;
+          padding: 20px;
+          margin: 0 auto;
+          margin-top: 100px;
+          background: white;
+          text-align: center;
+        }
+
+        .dummy-img {
+          width: 120px;
+        }
+        p {
+          line-height: 15px;
+        }
+
+        .try-another {
+          background: #28323E;
+          color: white;
+          background: #28323E;
+          color: white;
+          text-decoration: none;
+          padding: 10px;
+          display: block;
+          text-align: center;
+          margin-top: 20px;
+          border-radius: 3px;
+        }
+        .try-another:hover {
+          text-decoration: underline;
+        }
+      </style>
+</head>
+<body>
+  <div class="container">
+      <h1>Results</h1>
+      <h4>{{result}}</h4>
+      <div class="img-container">
+        <img class="img" src="/{{img}}" />
+      </div>
+      <a class="try-another" href="/">try another</a>
+
+  </div>
+</body>

@@ -1,0 +1,6 @@
+### Start
+
+```
+docker build -t happiness-recognizer .
+docker run -v $(pwd):/app -it -p 5000:5000 happiness-recognizer
+```
