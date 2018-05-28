@@ -60,6 +60,7 @@ class HappinessRecognizer:
     # x = preprocess_input(x)
     x = x/255
     res = self.model.predict(x)
+
     K.clear_session()
     res_value = [item for sublist in res for item in sublist][0]
 
