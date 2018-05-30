@@ -32,11 +32,29 @@
             border-radius: 3px;
             font-size: 20px;
         }
-        .dummy-img {
+        .img-container {
           width: 120px;
+          overflow: hidden;
+          border: 1px solid #ccc;
+          padding: 10px;
+          text-align: center;
+        }
+        .img-container img {
+          width: 90%;
         }
         p {
           line-height: 15px;
+        }
+
+        .results {
+          display: flex;
+          flex-direction: row;
+          justify-content: space-between;
+        }
+
+        .results ul {
+          margin: 0;
+          -webkit-padding-start: 0;
         }
       </style>
 </head>
@@ -45,14 +63,34 @@
     <h1>Upload your profile picture</h1>
     <p>The photo should show a full front view of your face. Ensure your facial features are clearly visible.</p>
 
-    <p>example</p>
-    <img class="dummy-img" src="static/uploads/1h6xpd.jpg" />
-
     <form method=post enctype=multipart/form-data>
       <div class="img-form">
         <input type=file name=file>
         <input type=submit value=Upload>
       </div>
     </form>
+
+    <hr />
+
+
+    <div class="results">
+      <div class="happy-container">
+        <h3>Happy people</h3>
+        <ul>
+          {% for row in happy %}
+          <li class="img-container"><img src="static/uploads/{{row[1]}}" /></li>
+          {% endfor %}
+        </ul>
+      </div>
+
+      <div class="unhappy-container">
+        <h3>Unhappy people</h3>
+        <ul>
+          {% for row in unhappy %}
+          <li class="img-container"><img src="static/uploads/{{row[1]}}" /></li>
+          {% endfor %}
+        </ul>
+      </div>
+    </div>
   </div>
 </body>

@@ -9,12 +9,19 @@ class DBManager:
     self.c = self.conn.cursor()
 
   def save_result(self, img, is_happy):
-    q = """
-      INSERT INTO happy_results (img, result) VALUES ('{}', {})
-    """.format(img, is_happy)
+    check = """
+      SELECT id FROM happy_results WHERE img = '{}' LIMIT 1
+    """.format(img)
 
-    self.c.execute(q)
-    self.conn.commit()
+    self.c.execute(check)
+    found = self.c.fetchone()
+
+    if found == None:
+      q = """
+        INSERT INTO happy_results (img, result) VALUES ('{}', {})
+      """.format(img, is_happy)
+      self.c.execute(q)
+      self.conn.commit()
 
   def load_results(self, is_happy = 1):
     q = """
@@ -22,4 +29,4 @@ class DBManager:
     """.format(is_happy)
     self.c.execute(q)
     all_rows = self.c.fetchall()
-    print('1):', all_rows)
+    return all_rows

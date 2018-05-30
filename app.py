@@ -33,12 +33,20 @@ def upload_file():
       if file and allowed_file(file.filename):
           filename = secure_filename(file.filename)
 
-          filename_w_prefix = time.time() + '_' + filename.lower()
+          filename_w_prefix = ''.join([str(time.time()), '_', filename.lower()])
 
           file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename_w_prefix))
           return redirect(url_for('uploaded_file',
                                   filename=filename_w_prefix))
-  return render_template('home.html', title='Happiness Recognizer')
+
+
+  sql_lite_file = os.path.join(os.path.dirname(os.path.realpath(__file__)), 'db.sqlite')
+  dbm = DBManager(sql_lite_file)
+
+  happy = dbm.load_results(1)
+  unhappy = dbm.load_results(0)
+
+  return render_template('home.html', title='Happiness Recognizer', happy=happy, unhappy=unhappy)
 
 
 @app.route('/results/<filename>')
