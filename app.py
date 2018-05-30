@@ -2,7 +2,10 @@ import os
 from flask import Flask, render_template, request, redirect, url_for
 from werkzeug.utils import secure_filename
 from flask import send_from_directory
+import time
+import re
 from happiness_recognizer import HappinessRecognizer
+from db_manager import DBManager
 
 UPLOAD_FOLDER = os.path.join('static', 'uploads')
 ALLOWED_EXTENSIONS = set(['png', 'jpg', 'jpeg', 'gif'])
@@ -29,9 +32,12 @@ def upload_file():
           return redirect(request.url)
       if file and allowed_file(file.filename):
           filename = secure_filename(file.filename)
-          file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
+
+          filename_w_prefix = time.time() + '_' + filename.lower()
+
+          file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename_w_prefix))
           return redirect(url_for('uploaded_file',
-                                  filename=filename))
+                                  filename=filename_w_prefix))
   return render_template('home.html', title='Happiness Recognizer')
 
 
@@ -40,8 +46,12 @@ def uploaded_file(filename):
   img = os.path.join(app.config['UPLOAD_FOLDER'], filename)
 
   happiness = HappinessRecognizer(img)
-  results = happiness.predict()
+  result_txt, result = happiness.predict()
 
-  return render_template('results.html', result=results, img=img)
+  sql_lite_file = os.path.join(os.path.dirname(os.path.realpath(__file__)), 'db.sqlite')
+  dbm = DBManager(sql_lite_file)
+  dbm.save_result(filename, result)
+
+  return render_template('results.html', result=result_txt, img=img)
 
 

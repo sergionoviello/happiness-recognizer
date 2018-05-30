@@ -65,9 +65,9 @@ class HappinessRecognizer:
     res_value = [item for sublist in res for item in sublist][0]
 
     if res_value > 0.4:
-      return "Happy"
+      return "Happy", 1
     else:
-      return "Not happy"
+      return "Not happy", 0
 
 
   def build_model(self, X_train, Y_train):
