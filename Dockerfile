@@ -15,4 +15,6 @@ WORKDIR /app
 
 EXPOSE 5000
 
-CMD "./start.sh"
+ADD start.sh /root/
+
+CMD ["/root/start.sh"]
