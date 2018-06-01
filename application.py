@@ -35,7 +35,7 @@ def upload_file():
 
           filename_w_prefix = ''.join([str(time.time()), '_', filename.lower()])
 
-          file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename_w_prefix))
+          file.save(os.path.join(application.config['UPLOAD_FOLDER'], filename_w_prefix))
           return redirect(url_for('uploaded_file',
                                   filename=filename_w_prefix))
 
