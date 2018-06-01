@@ -25,7 +25,7 @@ class DBManager:
 
   def load_results(self, is_happy = 1):
     q = """
-      SELECT * FROM happy_results WHERE result = {}
+      SELECT * FROM happy_results WHERE result = {} ORDER BY id desc
     """.format(is_happy)
     self.c.execute(q)
     all_rows = self.c.fetchall()
