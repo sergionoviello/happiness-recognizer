@@ -51,7 +51,7 @@ def upload_file():
 
 @application.route('/results/<filename>')
 def uploaded_file(filename):
-  img = os.path.join(app.config['UPLOAD_FOLDER'], filename)
+  img = os.path.join(application.config['UPLOAD_FOLDER'], filename)
 
   happiness = HappinessRecognizer(img)
   result_txt, result = happiness.predict()
