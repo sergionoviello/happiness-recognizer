@@ -10,14 +10,14 @@ from db_manager import DBManager
 UPLOAD_FOLDER = os.path.join('static', 'uploads')
 ALLOWED_EXTENSIONS = set(['png', 'jpg', 'jpeg', 'gif'])
 
-app = Flask(__name__)
-app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
+application = Flask(__name__)
+application.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 
 
 def allowed_file(filename):
   return '.' in filename and filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
 
-@app.route('/', methods=['GET', 'POST'])
+@application.route('/', methods=['GET', 'POST'])
 def upload_file():
   if request.method == 'POST':
       # check if the post request has the file part
@@ -49,7 +49,7 @@ def upload_file():
   return render_template('home.html', title='Happiness Recognizer', happy=happy, unhappy=unhappy)
 
 
-@app.route('/results/<filename>')
+@application.route('/results/<filename>')
 def uploaded_file(filename):
   img = os.path.join(app.config['UPLOAD_FOLDER'], filename)
 
@@ -63,4 +63,4 @@ def uploaded_file(filename):
   return render_template('results.html', result=result_txt, img=img)
 
 if __name__ == "__main__":
-  application.run(host=0.0.0.0, port=5000)
+  application.run(host='0.0.0.0', port=5000)
